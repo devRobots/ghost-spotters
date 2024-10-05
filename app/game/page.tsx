@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { MinuteTimer } from "@/components/ui/timer";
+import { useState } from "react";
+
 import Score from "@/components/ui/score";
 import Spots from "@/components/ui/spots";
 import Combo from "@/components/ui/combo";
 import Counter from "@/components/ui/counter";
+import Timer from "@/components/ui/timer";
 
 export default function Game() {
   const [score, setScore] = useState(0);
@@ -34,7 +35,7 @@ export default function Game() {
         </h1>
         <section className="flex flex-row gap-4">
           <Score score={score} />
-          <MinuteTimer seconds={timer} />
+          <Timer seconds={timer} />
           <Counter solved={solved} total={3} />
         </section>
       </section>
@@ -58,7 +59,7 @@ export default function Game() {
       </section>
       <section className="flex flex-row justify-between">
         <Spots finds={finds} total={5} />
-        <Combo combo={combo} />
+        {combo > 1 && <Combo combo={combo} setter={setCombo} />}
       </section>
     </main>
   );
