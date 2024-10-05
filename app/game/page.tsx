@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 import Score from "@/components/game/score";
@@ -8,18 +7,22 @@ import Spots from "@/components/game/spots";
 import Combo from "@/components/game/combo";
 import Timer from "@/components/game/timer";
 import Counter from "@/components/game/counter";
+import ImageSpotter from "@/components/game/image";
+
+const TIMEOUT = 180;
+const NUM_IMAGES = 3;
+const SPOTS_PER_IMAGE = 5;
 
 export default function Game() {
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(180);
-  const [solved, setSolved] = useState(1);
   const [finds, setFinds] = useState(0);
   const [combo, setCombo] = useState(1);
+  const [solved, setSolved] = useState(1);
 
   const handleClick = () => {
     setFinds(finds + 1);
     setScore(score + (10 * combo));
-    setCombo(combo + 1);
+    setCombo(combo * 2);
 
     if (finds === 4) {
       setFinds(0);
@@ -35,30 +38,19 @@ export default function Game() {
         </h1>
         <section className="flex flex-row gap-4">
           <Score score={score} />
-          <Timer seconds={timer} />
-          <Counter solved={solved} total={3} />
+          <Timer seconds={TIMEOUT} />
+          <Counter solved={solved} total={NUM_IMAGES} />
         </section>
       </section>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <Image
-          onClick={handleClick}
-          className="rounded-lg shadow-lg"
-          src="https://cdn.pixabay.com/photo/2014/02/20/13/21/flea-market-270566_1280.jpg"
-          width={712}
-          height={477}
-          alt=""
-        />
-        <Image
-          onClick={handleClick}
-          className="rounded-lg shadow-lg"
-          src="https://cdn.pixabay.com/photo/2014/02/20/13/21/flea-market-270566_1280.jpg"
-          width={712}
-          height={477}
-          alt=""
-        />
-      </section>
+      <ImageSpotter
+        finds={finds}
+        solved={solved}
+        numImages={NUM_IMAGES}
+        spotsPerImage={SPOTS_PER_IMAGE}
+        onClickSpot={handleClick}
+      />
       <section className="flex flex-row justify-between">
-        <Spots finds={finds} total={5} />
+        <Spots finds={finds} total={SPOTS_PER_IMAGE} />
         {combo > 1 && <Combo combo={combo} setter={setCombo} />}
       </section>
     </main>
