@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import Score from "@/components/ui/score";
-import Spots from "@/components/ui/spots";
-import Combo from "@/components/ui/combo";
-import Counter from "@/components/ui/counter";
-import Timer from "@/components/ui/timer";
+import Score from "@/components/game/score";
+import Spots from "@/components/game/spots";
+import Combo from "@/components/game/combo";
+import Timer from "@/components/game/timer";
+import Counter from "@/components/game/counter";
 
 export default function Game() {
   const [score, setScore] = useState(0);
@@ -39,7 +39,7 @@ export default function Game() {
           <Counter solved={solved} total={3} />
         </section>
       </section>
-      <section className="grid grid-cols-2 gap-8">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Image
           onClick={handleClick}
           className="rounded-lg shadow-lg"

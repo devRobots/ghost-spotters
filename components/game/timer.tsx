@@ -9,6 +9,9 @@ export default function Timer({ seconds }: { seconds: number }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (minutes === 0 && secondsLeft === 0) {
+        return;
+      }
       setSecondsLeft(secondsLeft - 1);
       if (secondsLeft === 0) {
         setMinutes(minutes - 1);
