@@ -11,7 +11,7 @@ export default function Spots(
       <div className="flex flex-row gap-1">
         {
           items.map(item => (
-            <Checkbox key={`check-$index`} checked={item < finds} disabled />
+            <Checkbox name={`checkbox-${item}`} key={`checkbox-${item}`} checked={item < finds} />
           ))
         }
       </div>
