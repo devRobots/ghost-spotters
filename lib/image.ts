@@ -1,8 +1,9 @@
 import { shuffle } from "@/lib/utils";
 
-export async function getImage() {
+export async function getImages(numImages: number): Promise<string[]> {
     const response = await fetch("/api/image")
     const data = await response.json();
     const shuffled = shuffle(data);
-    return shuffled[0];
+    const images = shuffled.splice(0, numImages);
+    return images;
 }

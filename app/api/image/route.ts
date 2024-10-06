@@ -1,19 +1,19 @@
 export async function GET() {
-    const auth = `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`;
-    const endpoint = new URL(process.env.UNSPLASH_API_ENDPOINT!);
-    endpoint.searchParams.set("query", "crowd");
-    endpoint.searchParams.set("page", "1");
-    endpoint.searchParams.set("orientation", "landscape");
+    const endpoint = new URL(process.env.PIXABAY_API_ENDPOINT!);
+
+    const page = 1; // Math.floor(Math.random() * 100);
+    endpoint.searchParams.set("q", "crowd");
+    endpoint.searchParams.set("page", `${page}`);
+    endpoint.searchParams.set("orientation", "horizontal");
+    endpoint.searchParams.set("key", process.env.PIXABAY_API_KEY!);
 
     const response = await fetch(endpoint, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": auth
-        }
+        headers: { "Content-Type": "application/json" }
     });
+
     const data = await response.json();
-    const images = data.results.map(
-        (result: UnsplashPhoto) => result.urls.regular
+    const images = data.hits.map(
+        (result: PixabayImage) => result.largeImageURL
     );
 
     return new Response(JSON.stringify(images), {

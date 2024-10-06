@@ -4,11 +4,12 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'images.unsplash.com',
-                pathname: '/**',
+                hostname: 'pixabay.com',
+                pathname: '/get/**',
             },
         ],
     },
+    reactStrictMode: false,
 };
 
 export default nextConfig;
