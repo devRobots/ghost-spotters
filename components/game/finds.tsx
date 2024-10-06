@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function Spots(
+export default function FindScore(
   { finds, total }: { finds: number, total: number }
 ) {
   const items = Array.from(Array(total).keys());

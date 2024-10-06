@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import Score from "@/components/game/score";
-import Spots from "@/components/game/spots";
 import Combo from "@/components/game/combo";
 import Timer from "@/components/game/timer";
 import Counter from "@/components/game/counter";
+import FindScore from "@/components/game/finds";
 import ImageSpotter from "@/components/game/image";
 
 const TIMEOUT = 180;
@@ -50,7 +50,7 @@ export default function Game() {
         onClickSpot={handleClick}
       />
       <section className="flex flex-row justify-between">
-        <Spots finds={finds} total={SPOTS_PER_IMAGE} />
+        <FindScore finds={finds} total={SPOTS_PER_IMAGE} />
         {combo > 1 && <Combo combo={combo} setter={setCombo} />}
       </section>
     </main>
