@@ -1,4 +1,5 @@
-import Image from "next/image";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { RefreshCwIcon } from "lucide-react";
 
@@ -31,6 +32,13 @@ export default function ImageSpotter(
   useEffect(() => {
     getImages(numImages).then(imgs => {
       setImages(imgs);
+
+      // Pre-load images
+      imgs.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+      
       setImageA(imgs[currentImage]);
       setImageB(imgs[currentImage]);
     });
@@ -41,19 +49,17 @@ export default function ImageSpotter(
       {
         images.length > 0 ? (
           <>
-            <Image
-              priority
+            <img
+              src={imageA!}
               onClick={handleClick}
               className="rounded-lg shadow-lg"
-              src={imageA!}
               width={720}
               height={720}
               alt="image" />
-            <Image
-              priority
+            <img
+              src={imageB!}
               onClick={handleClick}
               className="rounded-lg shadow-lg"
-              src={imageB!}
               width={720}
               height={720}
               alt="image" />

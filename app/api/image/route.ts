@@ -1,9 +1,10 @@
 export async function GET() {
     const endpoint = new URL(process.env.PIXABAY_API_ENDPOINT!);
 
-    const page = 1; // Math.floor(Math.random() * 100);
-    endpoint.searchParams.set("q", "crowd");
+    const page = Math.floor(Math.random() * 25);
     endpoint.searchParams.set("page", `${page}`);
+    endpoint.searchParams.set("q", "crowd people");
+    endpoint.searchParams.set("image_type", "photo");
     endpoint.searchParams.set("orientation", "horizontal");
     endpoint.searchParams.set("key", process.env.PIXABAY_API_KEY!);
 
