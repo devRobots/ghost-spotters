@@ -1,7 +1,8 @@
 export async function GET() {
     const endpoint = new URL(process.env.PIXABAY_API_ENDPOINT!);
 
-    const page = Math.floor(Math.random() * 25);
+    const page = Math.floor(Math.random() * 15);
+    endpoint.searchParams.set("per_page", "3");
     endpoint.searchParams.set("page", `${page}`);
     endpoint.searchParams.set("q", "crowd people");
     endpoint.searchParams.set("image_type", "photo");

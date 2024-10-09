@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { RefreshCwIcon } from "lucide-react";
 
-import { getImages } from "@/lib/image";
-
 export default function ImageSpotter(
   { finds, solved, numImages, spotsPerImage, onClickSpot }: {
     finds: number,
@@ -15,8 +13,7 @@ export default function ImageSpotter(
   }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [images, setImages] = useState<string[]>([]);
-  const [imageA, setImageA] = useState<string | null>(null);
-  const [imageB, setImageB] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
 
   // const [spots, setSpots] = useState(Array.from(Array(numImages).keys()));
 
@@ -24,23 +21,22 @@ export default function ImageSpotter(
     onClickSpot();
     if (finds + 1 === spotsPerImage && solved < numImages) {
       setCurrentImage(currentImage + 1);
-      setImageA(images[currentImage + 1]);
-      setImageB(images[currentImage + 1]);
+      setImage(images[currentImage + 1]);
     }
   };
 
   useEffect(() => {
-    getImages(numImages).then(imgs => {
-      setImages(imgs);
-
+    fetch("/api/image").then(response => {
+      return response.json();
+    }).then(imgs => {
       // Pre-load images
-      imgs.forEach(src => {
+      imgs.forEach((src: string) => {
         const img = new Image();
         img.src = src;
       });
-      
-      setImageA(imgs[currentImage]);
-      setImageB(imgs[currentImage]);
+
+      setImages(imgs);
+      setImage(imgs[currentImage]);
     });
   }, []);
 
@@ -50,18 +46,11 @@ export default function ImageSpotter(
         images.length > 0 ? (
           <>
             <img
-              src={imageA!}
+              src={image!}
               onClick={handleClick}
               className="rounded-lg shadow-lg"
-              width={720}
-              height={720}
-              alt="image" />
-            <img
-              src={imageB!}
-              onClick={handleClick}
-              className="rounded-lg shadow-lg"
-              width={720}
-              height={720}
+              width={1024}
+              height={683}
               alt="image" />
           </>
         ) : <RefreshCwIcon className="h-6 w-6 text-yellow-700" />
