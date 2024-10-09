@@ -8,9 +8,6 @@ import Timer from "@/components/game/timer";
 import FindScore from "@/components/game/finds";
 import ImageCanvas from "@/components/game/canvas";
 
-const TIMEOUT = 180;
-const NUM_SPOTS = 10;
-
 export default function Game() {
   const [score, setScore] = useState(0);
   const [finds, setFinds] = useState(0);
@@ -28,19 +25,16 @@ export default function Game() {
     <main className="grid place-content-center min-h-screen w-screen gap-8">
       <section className="flex flex-row justify-between">
         <h1 className="text-yellow-700 text-center text-4xl font-bold">
-          Spot AI
+          GhostSpotters
         </h1>
         <section className="flex flex-row gap-4">
           {combo > 1 && <Combo combo={combo} setter={setCombo} />}
-          <FindScore finds={finds} total={NUM_SPOTS} />
+          <FindScore finds={finds} />
           <Score score={score} />
-          <Timer seconds={TIMEOUT} />
+          <Timer />
         </section>
       </section>
-      <ImageCanvas
-        numSpots={NUM_SPOTS}
-        onClickSpot={handleClick}
-      />
+      <ImageCanvas onClickSpot={handleClick} />
     </main>
   );
 }

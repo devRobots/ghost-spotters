@@ -1,26 +1,27 @@
+import { TIMEOUT } from "@/app/consts";
 import { ClockIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import Digits from "@/components/ui/digits";
 
 
-export default function Timer({ seconds }: { seconds: number }) {
-  const [minutes, setMinutes] = useState(Math.floor(seconds / 60));
-  const [secondsLeft, setSecondsLeft] = useState(seconds % 60);
+export default function Timer() {
+  const [seconds, setSeconds] = useState(TIMEOUT % 60);
+  const [minutes, setMinutes] = useState(Math.floor(TIMEOUT / 60));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (minutes === 0 && secondsLeft === 0) {
+      if (minutes === 0 && seconds === 0) {
         return;
       }
-      setSecondsLeft(secondsLeft - 1);
-      if (secondsLeft === 0) {
+      setSeconds(seconds - 1);
+      if (seconds === 0) {
         setMinutes(minutes - 1);
-        setSecondsLeft(59);
+        setSeconds(59);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [secondsLeft, minutes]);
+  }, [seconds, minutes]);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
@@ -31,7 +32,7 @@ export default function Timer({ seconds }: { seconds: number }) {
         </span>
         <span className="text-xl">:</span>
         <span className="text-xl">
-          <Digits digits={2} value={secondsLeft} />
+          <Digits digits={2} value={seconds} />
         </span>
       </div>
     </div >

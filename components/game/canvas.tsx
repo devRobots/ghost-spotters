@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { NUM_SPOTS } from "@/app/consts";
 import { useEffect, useRef } from "react";
 
 export default function ImageCanvas({
-  onClickSpot, numSpots
+  onClickSpot
 }: {
-  numSpots: number,
   onClickSpot: () => void
 }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    fetch(`/api/image?spots=${numSpots}`).then(response => {
+    fetch(`/api/image?spots=${NUM_SPOTS}`).then(response => {
       return response.json();
     }).then((data: ImageDiffAPIResponse) => {
       const $canvas = canvasRef.current! as HTMLCanvasElement;

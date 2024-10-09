@@ -1,9 +1,10 @@
 import { Checkbox } from "@/components/ui/checkbox";
+import { NUM_SPOTS } from "@/app/consts";
 
 export default function FindScore(
-  { finds, total }: { finds: number, total: number }
+  { finds }: { finds: number }
 ) {
-  const items = Array.from(Array(total).keys());
+  const items = Array.from(Array(NUM_SPOTS).keys());
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
