@@ -1,38 +1,69 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
 
-/* eslint-disable @next/next/no-img-element */
 export default function ImageCanvas({
-  src, spots, onClickSpot
+  onClickSpot, numSpots
 }: {
-  src: string,
-  spots: number[][],
+  numSpots: number,
   onClickSpot: () => void
 }) {
-  const $canvas = useRef("canvas");
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    const canvas = $canvas.current.getContext("2d");
-    const image = new Image();
-    image.src = src;
+    fetch(`/api/image?spots=${numSpots}`).then(response => {
+      return response.json();
+    }).then((data: ImageDiffAPIResponse) => {
+      const $canvas = canvasRef.current! as HTMLCanvasElement;
+      const context = $canvas.getContext("2d");
+      const canvas = context!.canvas;
 
-    image.onload = () => {
-      canvas.width = image.width;
-      canvas.height = image.height;
-      canvas.drawImage(image, 0, 0);
+      const image = new Image();
+      image.src = data.image;
 
-      spots.forEach((spot) => {
-        const [x, y, w, h] = spot;
-        // red line
-        canvas.strokeStyle = "red";
-        canvas.strokeRect(x, y, w, h);
-      });
-    };
+      image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context!.drawImage(image, 0, 0);
+      };
+
+      const spots = data.spots;
+
+      const markSpot = (spotIndex: number) => {
+        const $canvas = canvasRef.current! as HTMLCanvasElement;
+        const context = $canvas.getContext("2d");
+
+        const [x, y, w, h] = spots[spotIndex];
+
+        context!.lineWidth = 5;
+        context!.strokeStyle = "red";
+        context!.strokeRect(x, y, w, h);
+
+        spots.splice(spotIndex, 1);
+      }
+
+      const checkSpot = (event: MouseEvent) => {
+        const $canvas = canvasRef.current! as HTMLCanvasElement;
+        const rect = $canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+
+        spots.forEach((spot, index) => {
+          const [x1, y1, w, h] = spot;
+          if (x >= x1 && x <= x1 + w && y >= y1 && y <= y1 + h) {
+            onClickSpot();
+            markSpot(index);
+          }
+        })
+      }
+
+      $canvas.addEventListener("click", checkSpot);
+    });
   }, []);
+
 
   return (
     <section className="flex items-center justify-center min-h-[480px] gap-8">
-      <canvas ref={$canvas} width="1280" height="853" />
+      <canvas ref={canvasRef} width="1280" height="853" />
     </section>
   );
 }

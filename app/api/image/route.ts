@@ -25,18 +25,12 @@ export async function GET(request: Request) {
     const shuffledFaces = shuffle(faces) as number[][];
     const spots = shuffledFaces.slice(0, parseInt(numSpots!));
 
-    const transformation = cloudinary.url(resource.public_id, {
+    const image = cloudinary.url(resource.public_id, {
         transformation: spots.map(spot => {
             const [x, y, w, h] = spot;
             return { effect: `gen_remove:region_(x_${x};y_${y};w_${w};h_${h})` }
         })
     });
 
-    const result = {
-        original: resource.url,
-        transformation,
-        spots
-    }
-
-    return new Response(JSON.stringify(result), { status: 200 });
+    return new Response(JSON.stringify({ image, spots }), { status: 200 });
 }

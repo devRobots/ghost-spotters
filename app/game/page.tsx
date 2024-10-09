@@ -6,10 +6,10 @@ import Score from "@/components/game/score";
 import Combo from "@/components/game/combo";
 import Timer from "@/components/game/timer";
 import FindScore from "@/components/game/finds";
-import ImageSpotter from "@/components/game/image";
+import ImageCanvas from "@/components/game/canvas";
 
 const TIMEOUT = 180;
-const NUM_SPOTS = 5;
+const NUM_SPOTS = 10;
 
 export default function Game() {
   const [score, setScore] = useState(0);
@@ -17,14 +17,11 @@ export default function Game() {
   const [combo, setCombo] = useState(1);
 
   const handleClick = () => {
+    alert("Hola Mundo");
+
     setFinds(finds + 1);
     setScore(score + (10 * combo));
     setCombo(combo * 2);
-
-    if (finds === NUM_SPOTS - 1) {
-      // TODO: Game Over
-      alert("Game Over")
-    }
   };
 
   return (
@@ -34,18 +31,16 @@ export default function Game() {
           Spot AI
         </h1>
         <section className="flex flex-row gap-4">
+          {combo > 1 && <Combo combo={combo} setter={setCombo} />}
+          <FindScore finds={finds} total={NUM_SPOTS} />
           <Score score={score} />
           <Timer seconds={TIMEOUT} />
         </section>
       </section>
-      <ImageSpotter
-        spotsPerImage={NUM_SPOTS}
+      <ImageCanvas
+        numSpots={NUM_SPOTS}
         onClickSpot={handleClick}
       />
-      <section className="flex flex-row justify-between">
-        <FindScore finds={finds} total={NUM_SPOTS} />
-        {combo > 1 && <Combo combo={combo} setter={setCombo} />}
-      </section>
     </main>
   );
 }

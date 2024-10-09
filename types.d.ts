@@ -5,7 +5,6 @@ interface CloudinaryResource {
 }
 
 interface ImageDiffAPIResponse {
-    original: string;
-    transformation: string;
+    image: string;
     spots: number[][];
 }
