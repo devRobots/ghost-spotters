@@ -1,25 +1,46 @@
-export async function GET() {
-    const endpoint = new URL(process.env.PIXABAY_API_ENDPOINT!);
+import { shuffle } from "@/lib/utils";
+import { v2 as cloudinary } from "cloudinary";
 
-    const page = Math.floor(Math.random() * 15);
-    endpoint.searchParams.set("per_page", "3");
-    endpoint.searchParams.set("page", `${page}`);
-    endpoint.searchParams.set("q", "crowd people");
-    endpoint.searchParams.set("image_type", "photo");
-    endpoint.searchParams.set("orientation", "horizontal");
-    endpoint.searchParams.set("key", process.env.PIXABAY_API_KEY!);
+export async function GET(request: Request) {
+    const url = new URL(request.url);
+    const searchParams = url.searchParams;
+    const numSpots = searchParams.get("spots");
 
-    const response = await fetch(endpoint, {
-        headers: { "Content-Type": "application/json" }
+    // if no numSpots is provided, return error
+    if (!numSpots) return new Response(JSON.stringify({
+        error: "No spots provided"
+    }), { status: 400 });
+
+    cloudinary.config({
+        cloud_name: 'devrobot',
+        api_key: '658115591999624',
+        api_secret: process.env.CLOUDINARY_API_SECRET!
     });
 
-    const data = await response.json();
-    const images = data.hits.map(
-        (result: PixabayImage) => result.largeImageURL
+    const img1 = await cloudinary.uploader.upload(
+        "public/scenes/scene1.jpg", { faces: true }
     );
+    const resourceFetch = [img1];
+    const resources = shuffle(resourceFetch).slice(0, 3)
 
-    return new Response(JSON.stringify(images), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
+    const result = resources.map((resource: CloudinaryResource) => {
+        const { faces } = resource;
+        const shuffledFaces = shuffle(faces) as number[][];
+        const spots = shuffledFaces.slice(0, parseInt(numSpots!));
+
+        const transformation = cloudinary.url(resource.public_id, {
+            transformation: spots.map(spot => {
+                const [x, y, w, h] = spot;
+                return { effect: `gen_remove:region_(x_${x};y_${y};w_${w};h_${h})` }
+            })
+        });
+
+        return {
+            original: resource.url,
+            transformation,
+            spots
+        }
     });
+
+    return new Response(JSON.stringify(result), { status: 200 });
 }
