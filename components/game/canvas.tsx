@@ -1,9 +1,9 @@
-"use client";
-
 /* eslint-disable react-hooks/exhaustive-deps */
-import { GameContext } from "@/context/GameContext";
+"use client";
 import { useContext, useEffect, useRef } from "react";
-import Spinner from "./spinner";
+
+import Loader from "./loader";
+import { GameContext } from "@/context/GameContext";
 
 export default function Canvas(
   { image, spots }: { image: string, spots: number[][] }
@@ -62,7 +62,7 @@ export default function Canvas(
   return (
     <>
       <canvas style={{ display: loading ? "none" : "block" }} ref={canvasRef} width="1280" height="853" />
-      {loading && <Spinner />}
+      {loading && <Loader />}
     </>
   );
 }
