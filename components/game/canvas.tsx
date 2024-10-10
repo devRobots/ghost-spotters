@@ -1,12 +1,10 @@
+"use client";
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import { NUM_SPOTS } from "@/app/consts";
 import { useEffect, useRef } from "react";
 
-export default function ImageCanvas({
-  onClickSpot
-}: {
-  onClickSpot: () => void
-}) {
+export default function ImageCanvas() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -50,7 +48,6 @@ export default function ImageCanvas({
         spots.forEach((spot, index) => {
           const [x1, y1, w, h] = spot;
           if (x >= x1 && x <= x1 + w && y >= y1 && y <= y1 + h) {
-            onClickSpot();
             markSpot(index);
           }
         })

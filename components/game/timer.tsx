@@ -1,3 +1,5 @@
+"use client";
+
 import { TIMEOUT } from "@/app/consts";
 import { ClockIcon } from "lucide-react";
 import { useState, useEffect } from "react";

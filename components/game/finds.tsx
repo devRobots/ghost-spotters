@@ -1,9 +1,12 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { NUM_SPOTS } from "@/app/consts";
+"use client";
+import { useContext } from "react";
 
-export default function FindScore(
-  { finds }: { finds: number }
-) {
+import { NUM_SPOTS } from "@/app/consts";
+import { Checkbox } from "@/components/ui/checkbox";
+import { GameContext } from "@/context/GameContext";
+
+export default function FindScore() {
+  const { finds } = useContext(GameContext);
   const items = Array.from(Array(NUM_SPOTS).keys());
 
   return (
