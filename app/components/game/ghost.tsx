@@ -1,7 +1,8 @@
 "use client";
-import { useGameStore } from "@/app/providers/game";
 import Image from "next/image"
 import { useState } from "react"
+
+import { useGameStore } from "@/providers/game";
 
 export default function GhostImage(
   { index, x, y, w, h }:

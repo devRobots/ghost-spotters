@@ -1,7 +1,7 @@
 "use client";
-import { NUM_SPOTS } from "@/app/consts";
+import { NUM_SPOTS } from "@/consts";
+import { useGameStore } from "@/providers/game";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useGameStore } from "@/app/providers/game";
 
 export default function FindScore() {
   const { finds } = useGameStore((state) => state);

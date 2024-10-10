@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { NUM_SPOTS } from "@/app/consts";
+import { NUM_SPOTS } from "@/consts";
 import GhostImage from "@/components/game/ghost";
 
 export default async function ImageSpotter() {

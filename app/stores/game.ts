@@ -1,4 +1,4 @@
-import { NUM_SPOTS } from '@/app/consts'
+import { NUM_SPOTS } from '@/consts'
 import { createStore } from 'zustand/vanilla'
 
 export type GameState = {

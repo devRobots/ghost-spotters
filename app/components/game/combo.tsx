@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { HourglassIcon, ZapIcon } from "lucide-react";
 
 import Digits from "@/components/ui/digits";
-import { COMBO_TIMEOUT } from "@/app/consts";
-import { useGameStore } from "@/app/providers/game";
+import { COMBO_TIMEOUT } from "@/consts";
+import { useGameStore } from "@/providers/game";
 
 export default function Combo(
 ) {

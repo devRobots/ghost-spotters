@@ -6,7 +6,7 @@ import Timer from "@/components/game/timer";
 import FindScore from "@/components/game/finds";
 import ImageSpotter from "@/components/game/image";
 
-import { GameStoreProvider } from "@/app/providers/game";
+import { GameStoreProvider } from "@/providers/game";
 import Spinner from "@/components/game/spinner";
 
 export default function Game() {

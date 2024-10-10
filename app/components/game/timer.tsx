@@ -1,10 +1,10 @@
 "use client";
+import { ClockIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 
-import { TIMEOUT } from "@/app/consts";
-import { ClockIcon } from "lucide-react";
+import { TIMEOUT } from "@/consts";
 import Digits from "@/components/ui/digits";
-import { useGameStore } from "@/app/providers/game";
+import { useGameStore } from "@/providers/game";
 
 
 export default function Timer() {
