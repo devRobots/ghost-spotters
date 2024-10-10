@@ -9,10 +9,7 @@ export default function Canvas(
   { image, spots }: { image: string, spots: number[][] }
 ) {
   const canvasRef = useRef(null);
-  const { load, loading, scoreUp } = useGameStore(
-    (state) => state,
-  )
-
+  const { load, loading, scoreUp } = useGameStore((state) => state)
 
   const markSpot = (spotIndex: number) => {
     const $canvas = canvasRef.current! as HTMLCanvasElement;

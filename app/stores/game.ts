@@ -1,3 +1,4 @@
+import { NUM_SPOTS } from '@/app/consts'
 import { createStore } from 'zustand/vanilla'
 
 export type GameState = {
@@ -33,6 +34,7 @@ export const createGameStore = () => {
             score: state.score + (state.combo * 10),
             combo: state.combo * 2,
             finds: state.finds + 1,
+            inGame: state.finds < (NUM_SPOTS - 1),
         })),
         load: () => set(() => ({
             loading: false
