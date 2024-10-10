@@ -41,7 +41,7 @@ export const createGameStore = () => {
             combo: 1
         })),
         gameOver: () => set(() => ({
-            inGame: true
+            inGame: false
         })),
     }))
 }
