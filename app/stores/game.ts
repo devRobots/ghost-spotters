@@ -5,6 +5,7 @@ export type GameState = {
     score: number,
     combo: number,
     finds: number,
+    sanity: number,
     inGame: boolean,
     loading: boolean,
 }
@@ -23,6 +24,7 @@ export const defaultInitState: GameState = {
     score: 0,
     combo: 1,
     finds: 0,
+    sanity: 0,
     inGame: true,
     loading: true,
 }
