@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import { HourglassIcon, ZapIcon } from "lucide-react";
 
-import Digits from "@/components/ui/digits";
 import { COMBO_TIMEOUT } from "@/consts";
+import Digits from "@/components/ui/digits";
 import { useGameStore } from "@/providers/game";
 
 export default function Combo(
 ) {
   const [time, setTime] = useState(0);
-  const { combo, resetCombo } = useGameStore((state) => state);
+  const { inGame, combo, resetCombo } = useGameStore((state) => state);
 
   useEffect(() => {
     if (combo > 1) setTime(COMBO_TIMEOUT);
@@ -27,7 +27,7 @@ export default function Combo(
 
 
   return (
-    time === 0 ? null :
+    time === 0 || !inGame ? null :
       <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
         <ZapIcon className="h-6 w-6" />
         <span className="text-xl">X{combo}</span>
