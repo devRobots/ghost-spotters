@@ -9,42 +9,35 @@ import { useGameStore } from "@/app/providers/game";
 
 export default function Combo(
 ) {
-  const [seconds, setSeconds] = useState(0);
+  const [time, setTime] = useState(0);
   const { combo, resetCombo } = useGameStore((state) => state);
 
   useEffect(() => {
-    if (combo > 1) {
-      setSeconds(COMBO_TIMEOUT);
-    }
+    if (combo > 1) setTime(COMBO_TIMEOUT);
   }, [combo]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (seconds === 0) {
-        resetCombo();
-        return;
-      }
-      setSeconds(seconds - 1);
+      if (time > 0) setTime(time - 1);
+      if (time === 0) resetCombo();
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [seconds, resetCombo]);
+  }, [time, resetCombo]);
 
-  if (seconds === 0) {
-    return null;
-  }
 
   return (
-    <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
-      <ZapIcon className="h-6 w-6" />
-      <span className="text-xl">X{combo}</span>
-      |
-      <div className="flex flex-row gap-3 items-center font-mono">
-        <HourglassIcon className="h-6 w-6" />
-        <span className="text-xl">
-          <Digits digits={2} value={seconds} />
-        </span>
-      </div>
-    </div >
+    time === 0 ? null :
+      <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
+        <ZapIcon className="h-6 w-6" />
+        <span className="text-xl">X{combo}</span>
+        |
+        <div className="flex flex-row gap-3 items-center font-mono">
+          <HourglassIcon className="h-6 w-6" />
+          <span className="text-xl">
+            <Digits digits={2} value={time} />
+          </span>
+        </div>
+      </div >
   );
 }
