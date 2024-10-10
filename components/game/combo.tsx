@@ -1,13 +1,13 @@
 "use client";
 
 import Digits from "@/components/ui/digits";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { HourglassIcon, ZapIcon } from "lucide-react";
-import { GameContext } from "@/context/GameContext";
+import { useGameStore } from "@/app/providers/game-provider";
 
 export default function Combo(
 ) {
-  const { combo, setCombo } = useContext(GameContext);
+  const { combo, resetCombo } = useGameStore((state) => state);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
@@ -19,14 +19,14 @@ export default function Combo(
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds === 0) {
-        setCombo(1);
+        resetCombo();
         return;
       }
       setSeconds(seconds - 1);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [seconds, setCombo]);
+  }, [seconds, resetCombo]);
 
   if (seconds === 0) {
     return null;

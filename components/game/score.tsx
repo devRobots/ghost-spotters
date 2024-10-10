@@ -1,13 +1,11 @@
 "use client";
-import { useContext } from "react";
-
 import { GemIcon } from "lucide-react";
 
 import Digits from "@/components/ui/digits";
-import { GameContext } from "@/context/GameContext";
+import { useGameStore } from "@/app/providers/game-provider";
 
 export default function Score() {
-  const { score } = useContext(GameContext);
+  const { score } = useGameStore((state) => state);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">

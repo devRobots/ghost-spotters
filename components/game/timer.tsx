@@ -1,14 +1,14 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import { TIMEOUT } from "@/app/consts";
 import { ClockIcon } from "lucide-react";
 import Digits from "@/components/ui/digits";
-import { GameContext } from "@/context/GameContext";
+import { useGameStore } from "@/app/providers/game-provider";
 
 
 export default function Timer() {
-  const { loading, setGameOver } = useContext(GameContext);
+  const { loading, gameOver } = useGameStore((state) => state);
   const [seconds, setSeconds] = useState(TIMEOUT % 60);
   const [minutes, setMinutes] = useState(Math.floor(TIMEOUT / 60));
 
@@ -18,7 +18,7 @@ export default function Timer() {
         return;
       }
       if (minutes === 0 && seconds === 0) {
-        setGameOver(true);
+        gameOver();
       }
       setSeconds(seconds - 1);
       if (seconds === 0) {
@@ -28,7 +28,7 @@ export default function Timer() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [loading, seconds, minutes, setGameOver]);
+  }, [loading, seconds, minutes, gameOver]);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">

@@ -1,15 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import Loader from "./loader";
-import { GameContext } from "@/context/GameContext";
+import { useGameStore } from "@/app/providers/game-provider";
 
 export default function Canvas(
   { image, spots }: { image: string, spots: number[][] }
 ) {
   const canvasRef = useRef(null);
-  const { loading, setLoading, finds, setFinds } = useContext(GameContext);
+  const { load, loading, scoreUp } = useGameStore(
+    (state) => state,
+  )
+
 
   const markSpot = (spotIndex: number) => {
     const $canvas = canvasRef.current! as HTMLCanvasElement;
@@ -22,7 +25,6 @@ export default function Canvas(
     context!.strokeRect(x, y, w, h);
 
     spots.splice(spotIndex, 1);
-    setFinds(finds + 1);
   }
 
   const checkSpot = (event: MouseEvent) => {
@@ -34,6 +36,7 @@ export default function Canvas(
     spots.forEach((spot, index) => {
       const [x1, y1, w, h] = spot;
       if (x >= x1 && x <= x1 + w && y >= y1 && y <= y1 + h) {
+        scoreUp();
         markSpot(index);
       }
     })
@@ -53,8 +56,7 @@ export default function Canvas(
       context!.drawImage($image, 0, 0);
 
       $canvas.addEventListener("click", checkSpot);
-
-      setLoading(false);
+      load();
     };
 
   }, []);

@@ -1,12 +1,10 @@
 "use client";
-import { useContext } from "react";
-
 import { NUM_SPOTS } from "@/app/consts";
 import { Checkbox } from "@/components/ui/checkbox";
-import { GameContext } from "@/context/GameContext";
+import { useGameStore } from "@/app/providers/game-provider";
 
 export default function FindScore() {
-  const { finds } = useContext(GameContext);
+  const { finds } = useGameStore((state) => state);
   const items = Array.from(Array(NUM_SPOTS).keys());
 
   return (
