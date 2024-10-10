@@ -27,7 +27,7 @@ export const defaultInitState: GameState = {
 }
 
 export const createGameStore = () => {
-    return createStore<GameStore>()((set: any) => ({
+    return createStore<GameStore>()((set) => ({
         ...defaultInitState,
         scoreUp: () => set((state: GameState) => ({
             score: state.score + (state.combo * 10),
