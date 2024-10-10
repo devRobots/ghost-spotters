@@ -5,7 +5,7 @@ import { useGameStore } from "@/app/providers/game";
 
 export default function FindScore() {
   const { finds } = useGameStore((state) => state);
-  const items = Array.from(Array(NUM_SPOTS).keys());
+  const items = Array(NUM_SPOTS);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
