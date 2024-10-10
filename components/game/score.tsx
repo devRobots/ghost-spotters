@@ -2,7 +2,7 @@
 import { GemIcon } from "lucide-react";
 
 import Digits from "@/components/ui/digits";
-import { useGameStore } from "@/app/providers/game-provider";
+import { useGameStore } from "@/app/providers/game";
 
 export default function Score() {
   const { score } = useGameStore((state) => state);

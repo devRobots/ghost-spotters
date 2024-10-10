@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import Loader from "./loader";
-import { useGameStore } from "@/app/providers/game-provider";
+import { useGameStore } from "@/app/providers/game";
 
 export default function Canvas(
   { image, spots }: { image: string, spots: number[][] }

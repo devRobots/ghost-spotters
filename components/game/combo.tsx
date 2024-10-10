@@ -3,7 +3,7 @@
 import Digits from "@/components/ui/digits";
 import { useState, useEffect } from "react";
 import { HourglassIcon, ZapIcon } from "lucide-react";
-import { useGameStore } from "@/app/providers/game-provider";
+import { useGameStore } from "@/app/providers/game";
 
 export default function Combo(
 ) {
