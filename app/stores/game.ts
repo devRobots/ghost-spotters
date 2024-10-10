@@ -31,7 +31,7 @@ export const createGameStore = () => {
         ...defaultInitState,
         scoreUp: () => set((state: GameState) => ({
             score: state.score + (state.combo * 10),
-            combo: state.combo + 1,
+            combo: state.combo * 2,
             finds: state.finds + 1,
         })),
         load: () => set(() => ({

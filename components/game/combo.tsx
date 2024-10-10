@@ -1,18 +1,20 @@
 "use client";
 
-import Digits from "@/components/ui/digits";
 import { useState, useEffect } from "react";
 import { HourglassIcon, ZapIcon } from "lucide-react";
+
+import Digits from "@/components/ui/digits";
+import { COMBO_TIMEOUT } from "@/app/consts";
 import { useGameStore } from "@/app/providers/game";
 
 export default function Combo(
 ) {
-  const { combo, resetCombo } = useGameStore((state) => state);
   const [seconds, setSeconds] = useState(0);
+  const { combo, resetCombo } = useGameStore((state) => state);
 
   useEffect(() => {
     if (combo > 1) {
-      setSeconds(10);
+      setSeconds(COMBO_TIMEOUT);
     }
   }, [combo]);
 
