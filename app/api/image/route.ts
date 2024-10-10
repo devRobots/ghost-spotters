@@ -24,7 +24,7 @@ export async function GET() {
         api_secret: process.env.CLOUDINARY_API_SECRET!
     });
 
-    const numScene = Math.floor(1 + (Math.random() * 4));
+    const numScene = Math.floor(1 + (Math.random() * 3));
     const scene = `public/scenes/scene${numScene}.jpg`;
     const resource = await cloudinary.uploader.upload(scene, { faces: true });
 
