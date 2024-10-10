@@ -29,7 +29,7 @@ export default function ImageSpotter() {
     <section className="relative w-[1280px] min-h-[853px] h-[853px]">
       {
         image ? <>
-          <img src={image} alt="scene" className="absolute" />
+          <img src={image} alt="scene" className="rounded-xl absolute" />
           {
             spots.map((spot: number[], index: number) => {
               const [x, y, w, h] = spot;

@@ -1,3 +1,5 @@
+import { Jolly_Lodger } from "next/font/google";
+
 import Score from "@/components/game/score";
 import Combo from "@/components/game/combo";
 import Timer from "@/components/game/timer";
@@ -6,18 +8,20 @@ import ImageSpotter from "@/components/game/image";
 
 import { GameStoreProvider } from "@/providers/game";
 
+const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] })
+
 export default function Game() {
   return (
     <GameStoreProvider>
-      <main className="grid place-content-center min-h-screen w-screen gap-4">
-        <section className="flex flex-row justify-between">
-          <h1 className="text-yellow-700 text-center text-4xl font-bold">
+      <main className="flex flex-col items-center gap-8 m-8">
+        <section className="flex flex-row justify-between w-2/3">
+          <h1 className={"text-green-500 text-center text-5xl font-bold " + jolly.className}>
             GhostSpotters
           </h1>
           <section className="flex flex-row gap-4">
             <Combo />
-            <FindScore />
             <Score />
+            <FindScore />
             <Timer />
           </section>
         </section>

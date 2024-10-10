@@ -21,7 +21,7 @@ export default function Timer() {
   }, [time, setTime, loading, gameOver, inGame]);
 
   return (
-    <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
+    <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-800 text-white">
       <ClockIcon className="h-6 w-6" />
       <div className="flex flex-row items-center font-mono">
         <span className="text-xl flex items-center">

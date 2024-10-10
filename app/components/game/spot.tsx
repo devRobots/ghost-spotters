@@ -25,6 +25,6 @@ export default function Spot(
   }, [inGame])
 
   return (
-    <div style={{ position: "absolute", top: y, left: x, width: w, height: h }} className={spotted ? "border-red-600 border-2" : ""} onClick={handleClick} />
+    <div style={{ position: "absolute", top: y, left: x, width: w, height: h }} className={spotted ? "border-green-500 border-4" : ""} onClick={handleClick} />
   )
 }

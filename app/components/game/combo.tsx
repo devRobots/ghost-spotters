@@ -28,7 +28,7 @@ export default function Combo(
 
   return (
     time === 0 || !inGame ? null :
-      <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
+      <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-800 text-white">
         <ZapIcon className="h-6 w-6" />
         <span className="text-xl">X{combo}</span>
         |
