@@ -1,9 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 
 import Spot from "@/components/game/spot";
-import Spinner from "@/components/game/spinner";
 import { useGameStore } from "@/providers/game";
 
 export default function ImageSpotter() {
@@ -29,7 +28,7 @@ export default function ImageSpotter() {
     <section className="relative w-[1280px] min-h-[853px] h-[853px]">
       {
         image ? <>
-          <img src={image} alt="scene" className="rounded-xl absolute" />
+          <NextImage unoptimized src={image} alt="scene" className="rounded-xl absolute" width={1280} height={853} />
           {
             spots.map((spot: number[], index: number) => {
               const [x, y, w, h] = spot;
@@ -44,7 +43,7 @@ export default function ImageSpotter() {
             })
           }
         </> :
-          <Spinner />
+          <NextImage unoptimized className="object-fill w-[1280x] h-[853px]" src={"/white-noise.gif"} alt="spinner" width={1280} height={853} />
       }
     </section>
   );
