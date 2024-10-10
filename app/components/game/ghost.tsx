@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useGameStore } from "@/providers/game";
 
@@ -8,7 +8,7 @@ export default function GhostImage(
   { index, x, y, w, h }:
     { index: number, x: number, y: number, w: number, h: number }
 ) {
-  const { scoreUp } = useGameStore((state) => state)
+  const { load, scoreUp } = useGameStore((state) => state)
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
@@ -16,6 +16,8 @@ export default function GhostImage(
     scoreUp();
     setSpotted(true)
   };
+
+  useEffect(load, [load]);
 
   return (
     <div className={
