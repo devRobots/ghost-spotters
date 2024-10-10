@@ -1,36 +1,57 @@
+import sharp from "sharp"
+import { Readable } from "stream";
+import { NUM_SPOTS } from "@/consts";
 import { shuffle } from "@/lib/utils";
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
 
-export async function GET(request: Request) {
-    const url = new URL(request.url);
-    const searchParams = url.searchParams;
-    const numSpots = searchParams.get("spots");
+async function uploadStream(buffer: Buffer): Promise<UploadApiResponse> {
+    return new Promise((res, rej) => {
+        const stream = cloudinary.uploader.upload_stream(
+            (err, result) => {
+                if (err) rej(err);
+                res(result!);
+            }
+        );
+        const str = Readable.from(buffer);
+        str.pipe(stream);
+    });
+}
 
-    if (!numSpots) return new Response(JSON.stringify({
-        error: "No spots provided"
-    }), { status: 400 });
-
+export async function GET() {
     cloudinary.config({
         cloud_name: 'devrobot',
         api_key: '658115591999624',
         api_secret: process.env.CLOUDINARY_API_SECRET!
     });
 
-    const scene = Math.floor(1 + (Math.random() * 4));
-    const resource = await cloudinary.uploader.upload(
-        `public/scenes/scene${scene}.jpg`, { faces: true }
-    );
+    const numScene = Math.floor(1 + (Math.random() * 4));
+    const scene = `public/scenes/scene${numScene}.jpg`;
+    const resource = await cloudinary.uploader.upload(scene, { faces: true });
 
     const { faces } = resource;
     const shuffledFaces = shuffle(faces) as number[][];
-    const spots = shuffledFaces.slice(0, parseInt(numSpots!));
+    const spots = shuffledFaces.slice(0, NUM_SPOTS);
 
-    const image = cloudinary.url(resource.public_id, {
-        transformation: spots.map(spot => {
-            const [x, y, w, h] = spot;
-            return { effect: `gen_remove:region_(x_${x};y_${y};w_${w};h_${h})` }
+    const ghosts = [];
+    for (let index = 0; index < spots.length; index++) {
+        const [x, y, w, h] = spots[index];
+        const ghost = sharp(`public/ghosts/ghost-${index}.webp`).resize(w, h)
+        const ghostOverlay = await ghost.toBuffer()
+        ghosts.push({
+            input: ghostOverlay, top: y, left: x
         })
-    });
+    }
+    const composition = sharp(scene).composite(ghosts);
+
+    const imageUpload = await composition.toBuffer()
+    const upload = await uploadStream(imageUpload);
+    const image = cloudinary.url(upload.public_id, {
+        transformation: [
+            { effect: 'gen_restore' },
+            { effect: 'art:incognito' }
+        ],
+        quality: "good"
+    })
 
     return new Response(JSON.stringify({ image, spots }), { status: 200 });
 }

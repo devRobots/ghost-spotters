@@ -2,10 +2,9 @@
 "use client"
 import { useEffect, useState } from "react";
 
-import { NUM_SPOTS } from "@/consts";
-import { useGameStore } from "@/providers/game";
+import Spot from "@/components/game/spot";
 import Spinner from "@/components/game/spinner";
-import GhostImage from "@/components/game/ghost";
+import { useGameStore } from "@/providers/game";
 
 export default function ImageSpotter() {
   const { load } = useGameStore((state) => state)
@@ -13,7 +12,7 @@ export default function ImageSpotter() {
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/image?spots=${NUM_SPOTS}`)
+    fetch("/api/image")
       .then(res => res.json())
       .then(data => {
         const img = new Image();
@@ -35,13 +34,11 @@ export default function ImageSpotter() {
             spots.map((spot: number[], index: number) => {
               const [x, y, w, h] = spot;
               return (
-                <GhostImage
+                <Spot
                   key={`ghost-${index}`}
                   index={index}
-                  x={x}
-                  y={y}
-                  w={w}
-                  h={h}
+                  x={x} y={y}
+                  w={w} h={h}
                 />
               )
             })
