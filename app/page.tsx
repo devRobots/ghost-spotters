@@ -12,7 +12,7 @@ import Spinner from "@/components/game/spinner";
 export default function Game() {
   return (
     <GameStoreProvider>
-      <main className="grid place-content-center min-h-screen w-screen gap-8">
+      <main className="grid place-content-center min-h-screen w-screen gap-4">
         <section className="flex flex-row justify-between">
           <h1 className="text-yellow-700 text-center text-4xl font-bold">
             GhostSpotters
