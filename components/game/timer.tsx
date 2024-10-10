@@ -8,13 +8,13 @@ import { GameContext } from "@/context/GameContext";
 
 
 export default function Timer() {
-  const { pause, setGameOver } = useContext(GameContext);
+  const { loading, setGameOver } = useContext(GameContext);
   const [seconds, setSeconds] = useState(TIMEOUT % 60);
   const [minutes, setMinutes] = useState(Math.floor(TIMEOUT / 60));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (pause) {
+      if (loading) {
         return;
       }
       if (minutes === 0 && seconds === 0) {
@@ -28,7 +28,7 @@ export default function Timer() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [pause, seconds, minutes, setGameOver]);
+  }, [loading, seconds, minutes, setGameOver]);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
