@@ -50,7 +50,7 @@ export async function GET() {
             { effect: 'gen_restore' },
             { effect: 'art:incognito' }
         ],
-        quality: "good"
+        quality: "auto"
     })
 
     return new Response(JSON.stringify({ image, spots }), { status: 200 });
