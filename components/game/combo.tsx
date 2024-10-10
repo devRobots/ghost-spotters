@@ -28,6 +28,10 @@ export default function Combo(
     return () => clearInterval(interval);
   }, [seconds, setCombo]);
 
+  if (seconds === 0) {
+    return null;
+  }
+
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-200 shadow-inner">
       <ZapIcon className="h-6 w-6" />
