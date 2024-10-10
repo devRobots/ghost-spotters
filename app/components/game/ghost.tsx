@@ -8,7 +8,7 @@ export default function GhostImage(
   { index, x, y, w, h }:
     { index: number, x: number, y: number, w: number, h: number }
 ) {
-  const { inGame, load, scoreUp } = useGameStore((state) => state)
+  const { inGame, loading, scoreUp } = useGameStore((state) => state)
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
@@ -17,7 +17,6 @@ export default function GhostImage(
     setSpotted(true);
   };
 
-  useEffect(load, [load]);
   useEffect(() => {
     if (!inGame) {
       setSpotted(true)
@@ -27,6 +26,7 @@ export default function GhostImage(
   return (
     <div style={{ position: "absolute", top: y, left: x, width: w, height: h }} className={spotted ? "border-red-600 border-2" : ""}>
       <Image style={{ opacity: 0.8 }}
+        hidden={loading}
         alt="ghost"
         onClick={handleClick}
         src={`/ghosts/ghost-${index}.png`}

@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 import Score from "@/components/game/score";
 import Combo from "@/components/game/combo";
 import Timer from "@/components/game/timer";
@@ -7,7 +5,6 @@ import FindScore from "@/components/game/finds";
 import ImageSpotter from "@/components/game/image";
 
 import { GameStoreProvider } from "@/providers/game";
-import Spinner from "@/components/game/spinner";
 
 export default function Game() {
   return (
@@ -24,9 +21,7 @@ export default function Game() {
             <Timer />
           </section>
         </section>
-        <Suspense fallback={<Spinner />}>
-          <ImageSpotter />
-        </Suspense>
+        <ImageSpotter />
       </main>
     </GameStoreProvider>
   );
