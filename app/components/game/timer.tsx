@@ -1,4 +1,5 @@
 "use client";
+import useSound from "use-sound";
 import { ClockIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -8,10 +9,13 @@ import { useGameStore } from "@/providers/game";
 
 
 export default function Timer() {
+  const [play] = useSound("/sounds/ambient.mp3", { volume: 0.25, interrupt: false });
   const { loading, gameOver, inGame } = useGameStore((state) => state);
   const [time, setTime] = useState(TIMEOUT);
 
   useEffect(() => {
+    play();
+
     const interval = setInterval(() => {
       if (!loading && inGame) setTime(time - 1);
       if (time === 1) gameOver();
