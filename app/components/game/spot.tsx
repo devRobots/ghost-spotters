@@ -11,8 +11,8 @@ export default function Spot(
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
-    scream(index);
     if (spotted || !inGame) return;
+    scream(index);
     scoreUp();
     setSpotted(true);
   };
