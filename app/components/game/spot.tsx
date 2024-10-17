@@ -3,25 +3,15 @@ import { useState } from "react";
 
 import { useGameStore } from "@/providers/game";
 
-export default function Spot({
-  index,
-  x,
-  y,
-  w,
-  h,
-}: {
-  index: number;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}) {
-  const { inGame, scoreUp } = useGameStore((state) => state);
+export default function Spot(
+  { index, x, y, w, h }:
+    { index: number; x: number; y: number; w: number; h: number; }
+) {
+  const { inGame, scoreUp, scream } = useGameStore((state) => state);
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
-    // TODO: Jumpscare
-    console.log(index);
+    scream(index);
     if (spotted || !inGame) return;
     scoreUp();
     setSpotted(true);
