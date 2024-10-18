@@ -7,11 +7,11 @@ export default function Spot(
   { index, x, y, w, h }:
     { index: number; x: number; y: number; w: number; h: number; }
 ) {
-  const { inGame, scoreUp, scream } = useGameStore((state) => state);
+  const { inGame, scoreUp, scream, isScreaming } = useGameStore((state) => state);
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
-    if (spotted || !inGame) return;
+    if (spotted || !inGame || isScreaming) return;
     scream(index);
     scoreUp();
     setSpotted(true);

@@ -5,17 +5,21 @@ import { useEffect } from "react";
 import useSound from "use-sound";
 
 export default function Screamer() {
-  const [play] = useSound("/sounds/scream.mp3", { volume: 1, interrupt: false });
+  const scream1 = useSound("/sounds/scream.mp3", { volume: 1, interrupt: false });
+  const scream2 = useSound("/sounds/loud_scream.mp3", { volume: 1, interrupt: false });
+
   const { isScreaming, ghost, stopScream } = useGameStore((state) => state);
 
   useEffect(() => {
     if (isScreaming) {
+      const scream = Math.random() > 0.5 ? scream1 : scream2;
+      const [play] = scream;
       play();
       setTimeout(() => {
         stopScream()
-      }, 2500);
+      }, 1500);
     }
-  }, [isScreaming, stopScream, play]);
+  }, [isScreaming, stopScream, scream1, scream2]);
 
   return (
     <section

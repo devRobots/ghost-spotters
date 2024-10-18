@@ -17,6 +17,7 @@ export type GameActions = {
   gameOver: () => void;
   resetCombo: () => void;
   scream: (ghost: number) => void;
+  stopScream: () => void;
 };
 
 export type GameStore = GameState & GameActions;
