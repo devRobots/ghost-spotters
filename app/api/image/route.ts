@@ -19,8 +19,8 @@ async function uploadStream(buffer: Buffer): Promise<UploadApiResponse> {
 
 export async function GET() {
     cloudinary.config({
-        cloud_name: 'devrobot',
-        api_key: '658115591999624',
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+        api_key: process.env.CLOUDINARY_API_KEY!,
         api_secret: process.env.CLOUDINARY_API_SECRET!
     });
 
