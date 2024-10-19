@@ -1,6 +1,7 @@
 "use client";
 
 import { useGameStore } from "@/providers/game";
+import { ScanEyeIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function FindScore() {
@@ -8,16 +9,18 @@ export default function FindScore() {
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-800 text-white text-2xl">
-      Ghosts:
+      <ScanEyeIcon className="mr-2" />
       {
-        finds.map((_, index) => {
+        finds.map((spotted, index) => {
           return (
-            <Image
-              className="sepia"
-              key={index}
-              src={`/images/ghost${index}.webp`}
-              alt="ghost"
-              width={24} height={24} />
+            <div key={`ghost-${index}`} className="relative">
+              <Image
+                className="static sepia"
+                src={`/images/ghost${index}.webp`}
+                alt="ghost"
+                width={24} height={24} />
+              <span hidden={!finds[index]} className="absolute top-0 text-4xl text-red-900 font-bold">X</span>
+            </div>
           )
         })
       }

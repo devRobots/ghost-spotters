@@ -50,7 +50,7 @@ export const createGameStore = () => {
         combo: state.combo * 2,
         finds: state.finds.map((_, index) => {
           if (index === ghost) return true;
-          return false;
+          return state.finds[index];
         }),
         ghost: ghost,
       })),
