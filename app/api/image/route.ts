@@ -30,6 +30,7 @@ export async function GET() {
         });
     });
 
+    transformation.push({ effect: 'enhance' });
     transformation.push({ effect: 'gen_restore' });
     transformation.push({ effect: 'art:incognito' });
     const image = cloudinary.url(scene, { transformation })
