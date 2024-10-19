@@ -1,28 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import useSound from "use-sound";
 import { ClockIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-import { TIMEOUT } from "@/consts";
 import Digits from "@/components/ui/digits";
 import { useGameStore } from "@/providers/game";
 
 
 export default function Timer() {
   const [play] = useSound("/sounds/ambient.mp3", { volume: 0.25, interrupt: false });
-  const { loading, gameOver, inGame } = useGameStore((state) => state);
-  const [time, setTime] = useState(TIMEOUT);
+  const { status, gameOver, time, tick } = useGameStore((state) => state);
 
   useEffect(() => {
     play();
 
     const interval = setInterval(() => {
-      if (!loading && inGame) setTime(time - 1);
-      if (time === 1) gameOver();
+      if (status === "playing") tick();
+      if (time === 1) gameOver("lose");
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [time, setTime, loading, gameOver, inGame]);
+  }, [time, status, gameOver, play, tick]);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-800 text-white">

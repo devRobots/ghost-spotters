@@ -24,10 +24,10 @@ export default function Game() {
           >
             GhostSpotters
           </h1>
+          <FindScore />
           <section className="flex flex-row gap-4">
             <Combo />
             <Score />
-            <FindScore />
             <Timer />
           </section>
         </section>

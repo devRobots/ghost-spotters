@@ -7,13 +7,12 @@ export default function Spot(
   { index, x, y, w, h }:
     { index: number; x: number; y: number; w: number; h: number; }
 ) {
-  const { inGame, scoreUp, scream, isScreaming } = useGameStore((state) => state);
+  const { status, scoreUp, isScreaming } = useGameStore((state) => state);
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
-    if (spotted || !inGame || isScreaming) return;
-    scream(index);
-    scoreUp();
+    if (spotted || isScreaming || status === "gameover") return;
+    scoreUp(index);
     setSpotted(true);
   };
 
@@ -24,7 +23,7 @@ export default function Spot(
       className={
         spotted
           ? "border-green-500 border-4"
-          : !inGame
+          : status === "gameover"
             ? "border-red-500 border-4"
             : ""
       }

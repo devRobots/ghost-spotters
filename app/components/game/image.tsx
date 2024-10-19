@@ -7,7 +7,7 @@ import Loader from "@/components/game/loader";
 import { useGameStore } from "@/providers/game";
 
 export default function ImageSpotter() {
-  const { load, loading } = useGameStore((state) => state)
+  const { load, status } = useGameStore((state) => state)
   const [image, setImage] = useState("");
   const [spots, setSpots] = useState([]);
 
@@ -27,7 +27,7 @@ export default function ImageSpotter() {
   return (
     <section className="relative w-[1280px] min-h-[853px] h-[853px]">
       {
-        loading ? <Loader ready={!image} /> :
+        status === "loading" ? <Loader ready={!image} /> :
           <>
             <NextImage unoptimized src={image} alt="scene" className="rounded-xl absolute" width={1280} height={853} />
             {
