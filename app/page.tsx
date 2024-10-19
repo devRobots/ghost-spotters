@@ -1,8 +1,6 @@
 import { Jolly_Lodger } from "next/font/google";
 
 import Fog from "@/components/game/fog";
-import Score from "@/components/game/score";
-import Combo from "@/components/game/combo";
 import Timer from "@/components/game/timer";
 import FindScore from "@/components/game/finds";
 import Screamer from "@/components/game/screamer";
@@ -25,11 +23,7 @@ export default function Game() {
             GhostSpotters
           </h1>
           <FindScore />
-          <section className="flex flex-row gap-4">
-            <Combo />
-            <Score />
-            <Timer />
-          </section>
+          <Timer />
         </section>
         <section className="static">
           <Fog />
