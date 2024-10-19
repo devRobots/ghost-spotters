@@ -1,21 +1,6 @@
-import sharp from "sharp"
-import { Readable } from "stream";
 import { NUM_SPOTS } from "@/consts";
-import { shuffle } from "@/lib/utils";
-import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
-async function uploadStream(buffer: Buffer): Promise<UploadApiResponse> {
-    return new Promise((res, rej) => {
-        const stream = cloudinary.uploader.upload_stream(
-            (err, result) => {
-                if (err) rej(err);
-                res(result!);
-            }
-        );
-        const str = Readable.from(buffer);
-        str.pipe(stream);
-    });
-}
 
 export async function GET() {
     cloudinary.config({
@@ -24,34 +9,30 @@ export async function GET() {
         api_secret: process.env.CLOUDINARY_API_SECRET!
     });
 
-    const numScene = Math.floor(1 + (Math.random() * 3));
-    const scene = `public/scenes/scene${numScene}.jpg`;
-    const resource = await cloudinary.uploader.upload(scene, { faces: true });
+    const numScene = Math.round(Math.random() * 4);
+    const scene = `scene${numScene}`;
 
-    const { faces } = resource;
-    const shuffledFaces = shuffle(faces) as number[][];
-    const spots = shuffledFaces.slice(0, NUM_SPOTS);
+    const imageData = await cloudinary.api.resource(scene, { faces: true });
+    const { faces } = imageData;
+    const spots = faces.splice(faces.length - NUM_SPOTS);
 
-    const ghosts = [];
-    for (let index = 0; index < spots.length; index++) {
-        const [x, y, w, h] = spots[index];
-        const ghost = sharp(`public/ghosts/ghost-${index}.webp`).resize(w, h)
-        const ghostOverlay = await ghost.toBuffer()
-        ghosts.push({
-            input: ghostOverlay, top: y, left: x
-        })
-    }
-    const composition = sharp(scene).composite(ghosts);
+    const transformation = [];
+    spots.forEach((faceBounds: number[], index: number) => {
+        const ghost = `ghost${index}`
+        const [x, y, w, h] = faceBounds;
+        transformation.push({
+            overlay: ghost,
+            width: w, height: h,
+            x: x, y: y,
+            gravity: "north_west",
+            effect: 'blur:50',
+            opacity: 90
+        });
+    });
 
-    const imageUpload = await composition.toBuffer()
-    const upload = await uploadStream(imageUpload);
-    const image = cloudinary.url(upload.public_id, {
-        transformation: [
-            { effect: 'gen_restore' },
-            { effect: 'art:incognito' }
-        ],
-        quality: "auto"
-    })
+    transformation.push({ effect: 'gen_restore' });
+    transformation.push({ effect: 'art:incognito' });
+    const image = cloudinary.url(scene, { transformation })
 
     return new Response(JSON.stringify({ image, spots }), { status: 200 });
 }
