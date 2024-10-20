@@ -19,7 +19,7 @@ export default function FindScore() {
                 src={`/images/ghost${index}.webp`}
                 alt="ghost"
                 width={24} height={24} />
-              <span hidden={!spotted} className="absolute top-0 text-4xl text-red-900 font-bold">X</span>
+              <span hidden={!spotted} className="absolute top-1 left-1 text-4xl text-red-900 font-bold">X</span>
             </div>
           )
         })
