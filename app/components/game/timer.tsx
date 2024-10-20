@@ -5,6 +5,7 @@ import { ClockIcon } from "lucide-react";
 
 import Digits from "@/components/ui/digits";
 import { useGameStore } from "@/providers/game";
+import { redirect } from "next/navigation";
 
 
 export default function Timer() {
@@ -18,6 +19,12 @@ export default function Timer() {
 
     return () => clearInterval(interval);
   }, [time, status, gameOver, tick]);
+
+  useEffect(() => {
+    if (status === "gameover") {
+      redirect("/gameover");
+    }
+  }, [status]);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-800 text-white">
