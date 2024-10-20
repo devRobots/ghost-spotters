@@ -9,16 +9,20 @@ export type GameState = {
   status: GameStatus;
   result: GameResults;
   finds: boolean[];
+
   ghost: number;
+  spotted: boolean;
   isScreaming: boolean;
 };
 
 export type GameActions = {
   tick: () => void;
   load: () => void;
+  scream: () => void;
+  shutup: () => void;
+  unmark: () => void;
   spot: (ghost: number) => void;
   gameOver: (result: GameResults) => void;
-  stopScream: () => void;
 };
 
 export type GameStore = GameState & GameActions;
@@ -28,7 +32,9 @@ export const defaultInitState: GameState = {
   status: "loading",
   result: undefined,
   finds: Array(NUM_SPOTS).fill(false),
+
   ghost: -1,
+  spotted: false,
   isScreaming: false,
 };
 
@@ -46,7 +52,7 @@ export const createGameStore = () => {
           return state.finds[index];
         }),
         ghost: ghost,
-        isScreaming: true
+        spotted: true,
       })),
     load: () =>
       set(() => ({
@@ -57,9 +63,17 @@ export const createGameStore = () => {
         status: "gameover",
         result: reason
       })),
-    stopScream: () =>
+    scream: () =>
+      set(() => ({
+        isScreaming: true,
+      })),
+    shutup: () =>
       set(() => ({
         isScreaming: false,
+      })),
+    unmark: () =>
+      set(() => ({
+        spotted: false,
       })),
   }));
 };

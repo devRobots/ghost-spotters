@@ -4,7 +4,7 @@ import { useGameStore } from "@/providers/game";
 import useHorrorSounds from "@/hooks/useHorrorSounds";
 
 export default function Screamer() {
-  const { } = useHorrorSounds();
+  useHorrorSounds();
   const { isScreaming, ghost } = useGameStore((state) => state);
 
   return (

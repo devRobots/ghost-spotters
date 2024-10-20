@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { useGameStore } from "@/providers/game";
 
 export default function useHorrorSounds() {
-  const { isScreaming, stopScream } = useGameStore((state) => state);
+  const { spotted, shutup, scream, unmark } = useGameStore((state) => state);
 
   const [playScream1, infoScream1] = useSound("/sounds/scream.mp3", { volume: 1, interrupt: true });
   const [playScream2, infoScream2] = useSound("/sounds/loud_scream.mp3", { volume: 1, interrupt: true });
@@ -13,8 +13,8 @@ export default function useHorrorSounds() {
   const [playWhisper2, infoWhisper2] = useSound("/sounds/laugh.mp3", { volume: 1, interrupt: true });
   const [playWhisper3, infoWhisper3] = useSound("/sounds/breath.mp3", { volume: 1, interrupt: true });
 
-  const scream = useCallback(() => {
-    console.log("Scream!");
+  const playScream = useCallback(() => {
+    scream();
     const option = Math.random();
     const info = option <= 0.5 ? infoScream1 : infoScream2;
 
@@ -22,12 +22,12 @@ export default function useHorrorSounds() {
     else playScream2();
 
     setTimeout(() => {
-      stopScream();
+      shutup();
+      unmark();
     }, info.duration!);
-  }, [stopScream, playScream1, playScream2]);
+  }, [shutup, playScream1, playScream2]);
 
-  const whisper = useCallback(() => {
-    console.log("Whisper!");
+  const playWhisper = useCallback(() => {
     const option = Math.random();
     const info = option <= 0.33 ? infoWhisper1 : option <= 0.66 ? infoWhisper2 : infoWhisper3;
 
@@ -36,16 +36,16 @@ export default function useHorrorSounds() {
     else playWhisper3();
 
     setTimeout(() => {
-      stopScream();
+      unmark();
     }, info.duration!);
-  }, [stopScream, playWhisper1, playWhisper2, playWhisper3]);
+  }, [shutup, playWhisper1, playWhisper2, playWhisper3]);
 
   useEffect(() => {
-    if (isScreaming) {
-      if (Math.random() <= 0.5) scream();
-      else whisper();
+    if (spotted) {
+      if (Math.random() >= 0.75) playScream();
+      else playWhisper();
     }
-  }, [isScreaming, scream, whisper]);
+  }, [spotted, playScream, playWhisper]);
 
   return {};
 }
