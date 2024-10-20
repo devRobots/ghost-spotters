@@ -7,12 +7,12 @@ export default function Spot(
   { index, x, y, w, h }:
     { index: number; x: number; y: number; w: number; h: number; }
 ) {
-  const { status, scoreUp, isScreaming } = useGameStore((state) => state);
+  const { status, spot, isScreaming } = useGameStore((state) => state);
   const [spotted, setSpotted] = useState(false);
 
   const handleClick = () => {
     if (spotted || isScreaming || status === "gameover") return;
-    scoreUp(index);
+    spot(index);
     setSpotted(true);
   };
 

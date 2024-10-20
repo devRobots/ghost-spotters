@@ -6,8 +6,6 @@ type GameResults = "win" | "lose" | undefined
 
 export type GameState = {
   time: number;
-  score: number;
-  combo: number;
   status: GameStatus;
   result: GameResults;
   finds: boolean[];
@@ -18,9 +16,8 @@ export type GameState = {
 export type GameActions = {
   tick: () => void;
   load: () => void;
-  scoreUp: (ghost: number) => void;
+  spot: (ghost: number) => void;
   gameOver: (result: GameResults) => void;
-  resetCombo: () => void;
   stopScream: () => void;
 };
 
@@ -28,8 +25,6 @@ export type GameStore = GameState & GameActions;
 
 export const defaultInitState: GameState = {
   time: TIMEOUT,
-  score: 0,
-  combo: 1,
   status: "loading",
   result: undefined,
   finds: Array(NUM_SPOTS).fill(false),
@@ -44,23 +39,18 @@ export const createGameStore = () => {
       set((state: GameState) => ({
         time: state.time - 1
       })),
-    scoreUp: (ghost: number) =>
+    spot: (ghost: number) =>
       set((state: GameState) => ({
-        score: state.score + state.combo * 10,
-        combo: state.combo * 2,
         finds: state.finds.map((_, index) => {
           if (index === ghost) return true;
           return state.finds[index];
         }),
         ghost: ghost,
+        isScreaming: true
       })),
     load: () =>
       set(() => ({
         status: "playing"
-      })),
-    resetCombo: () =>
-      set(() => ({
-        combo: 1,
       })),
     gameOver: (reason: GameResults) =>
       set(() => ({
