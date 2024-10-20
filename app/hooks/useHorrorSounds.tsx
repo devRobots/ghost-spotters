@@ -4,7 +4,9 @@ import { useCallback, useEffect } from "react";
 import { useGameStore } from "@/providers/game";
 
 export default function useHorrorSounds() {
-  const { spotted, shutup, scream, unmark } = useGameStore((state) => state);
+  const { time, spotted, shutup, scream, unmark } = useGameStore((state) => state);
+
+  const [playHeartbeat] = useSound("/sounds/heartbeat.mp3", { volume: 2, interrupt: false, playbackRate: 1.5 });
 
   const [playScream1, infoScream1] = useSound("/sounds/scream.mp3", { volume: 1, interrupt: true });
   const [playScream2, infoScream2] = useSound("/sounds/loud_scream.mp3", { volume: 1, interrupt: true });
@@ -47,5 +49,7 @@ export default function useHorrorSounds() {
     }
   }, [spotted, playScream, playWhisper]);
 
-  return {};
+  useEffect(() => {
+    if (time === 50) playHeartbeat();
+  }, [time]);
 }
