@@ -1,45 +1,35 @@
-import Image from "next/image";
 import { Jolly_Lodger } from "next/font/google";
-
-import Timer from "@/components/game/timer";
-import FindScore from "@/components/game/finds";
-import Screamer from "@/components/game/screamer";
-import ImageSpotter from "@/components/game/image";
-
-import { GameStoreProvider } from "@/providers/game";
 
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 
-export default function Game() {
+export default function Home() {
   return (
-    <GameStoreProvider>
-      <main className="flex flex-col items-center gap-8 m-8">
-        <section className="flex flex-row justify-between items-center w-2/3">
-          <h1
-            className={
-              "text-green-500 text-center text-5xl font-bold " + jolly.className
-            }
-          >
-            GhostSpotters
-          </h1>
-          <FindScore />
-          <Timer />
-        </section>
-        <section className="static">
-          <div className="absolute top-0 left-0 w-full h-full opacity-15">
-            <Image
-              priority
-              src="/images/ghost0.webp"
-              alt="fog"
-              width={720}
-              height={853}
-              className="absolute w-[620px] h-auto"
-            />
-          </div>
-          <ImageSpotter />
-          <Screamer />
-        </section>
-      </main>
-    </GameStoreProvider>
-  );
+    <main className="flex flex-col justify-center items-center h-screen gap-16">
+      <section className="flex flex-col justify-center items-center gap-2">
+        <h1
+          className={
+            "text-green-500 text-center text-6xl font-bold " + jolly.className
+          }
+        >
+          GhostSpotters
+        </h1>
+        <h2 className={"text-4xl font-bold text-center text-white " + jolly.className}>
+          ¿A quien vas a llamar?
+        </h2>
+      </section>
+
+      <p className="text-xl text-center text-white font-mono w-96">
+        Encuentra a los fantasmas atrapados en las fotos antes de que el tiempo se acabe
+      </p>
+
+      <button>
+        <a
+          href="/game"
+          className={"px-8 py-1 text-3xl text-white bg-green-700 rounded " + jolly.className}
+        >
+          Jugar
+        </a>
+      </button>
+    </main>
+  )
 }
