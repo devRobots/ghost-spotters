@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 
 export default function Timer() {
-  const { status, gameOver, time, tick } = useGameStore((state) => state);
+  const { status, result, gameOver, time, tick } = useGameStore((state) => state);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,10 +21,10 @@ export default function Timer() {
   }, [time, status, gameOver, tick]);
 
   useEffect(() => {
-    if (status === "gameover") {
-      redirect("/gameover");
-    }
-  }, [status]);
+    if (status !== "gameover") return;
+    if (result === "lose") redirect("/gameover")
+    if (result === "win") redirect("/win");
+  }, [status, result]);
 
   return (
     <div className="flex flex-row gap-3 items-center rounded-2xl py-2 px-3 bg-stone-800 text-white">
