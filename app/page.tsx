@@ -33,7 +33,7 @@ export default function Game() {
               alt="fog"
               width={720}
               height={853}
-              className="absolute h-[720px] w-auto"
+              className="absolute w-[620px] h-auto"
             />
           </div>
           <ImageSpotter />
