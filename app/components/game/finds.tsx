@@ -15,7 +15,7 @@ export default function FindScore() {
           return (
             <div key={`ghost-${index}`} className="relative">
               <Image
-                className="static sepia"
+                className="static sepia w-auto h-auto"
                 src={`/images/ghost${index}.webp`}
                 alt="ghost"
                 width={24} height={24} />
