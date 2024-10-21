@@ -29,7 +29,7 @@ export default function ImageSpotter() {
       {
         status === "loading" ? <Loader ready={!image} /> :
           <>
-            <NextImage unoptimized src={image} alt="scene" className="rounded-xl absolute" width={1024} height={682} />
+            <NextImage unoptimized src={`${image}?seed=${Math.random()}`} placeholder="blur" blurDataURL={image} alt="scene" className="rounded-xl absolute" width={1024} height={682} />
             {
               spots.map((spot: number[], index: number) => {
                 const [x, y, w, h] = spot;
