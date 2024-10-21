@@ -1,4 +1,5 @@
 import { NUM_SPOTS } from "@/consts";
+import { shuffle } from "@/lib/utils";
 import { v2 as cloudinary } from "cloudinary";
 
 
@@ -14,7 +15,7 @@ export async function GET() {
 
     const imageData = await cloudinary.api.resource(scene, { faces: true });
     const { faces } = imageData;
-    const spots = faces.splice(faces.length - NUM_SPOTS);
+    const spots = shuffle(faces).slice(0, NUM_SPOTS) as number[][];
 
     const transformation = [];
     spots.forEach((faceBounds: number[], index: number) => {
