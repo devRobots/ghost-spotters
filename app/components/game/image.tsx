@@ -15,10 +15,11 @@ export default function ImageSpotter() {
     fetch("/api/image", { cache: "no-cache" })
       .then(res => res.json())
       .then(data => {
+        const url = data.image + "?seed=" + Math.random();
         const img = new Image();
-        img.src = data.image;
+        img.src = url;
         img.addEventListener("load", () => {
-          setImage(data.image);
+          setImage(url);
           setSpots(data.spots);
         })
       })
@@ -29,7 +30,7 @@ export default function ImageSpotter() {
       {
         status === "loading" ? <Loader ready={!image} /> :
           <>
-            <NextImage unoptimized src={`${image}?seed=${Math.random()}`} placeholder="blur" blurDataURL={image} alt="scene" className="rounded-xl absolute" width={1024} height={682} />
+            <NextImage unoptimized src={image} placeholder="blur" blurDataURL={image} alt="scene" className="rounded-xl absolute" width={1024} height={682} />
             {
               spots.map((spot: number[], index: number) => {
                 const [x, y, w, h] = spot;
