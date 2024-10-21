@@ -12,14 +12,18 @@ export default function ImageSpotter() {
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-    fetch("/api/image", { cache: "no-cache" })
+    const seed = Math.random();
+    const params = new URLSearchParams();
+    params.append("seed", seed.toString());
+    const url = `/api/image?${params.toString()}`
+
+    fetch(url, { cache: "no-store" })
       .then(res => res.json())
       .then(data => {
-        const url = data.image + "?seed=" + Math.random();
         const img = new Image();
-        img.src = url;
+        img.src = data.image;
         img.addEventListener("load", () => {
-          setImage(url);
+          setImage(data.image);
           setSpots(data.spots);
         })
       })

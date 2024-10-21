@@ -3,14 +3,17 @@ import { shuffle } from "@/lib/utils";
 import { v2 as cloudinary } from "cloudinary";
 
 
-export async function GET() {
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
+    const seed = parseFloat(searchParams.get("seed")!);
+
     cloudinary.config({
         cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
         api_key: process.env.CLOUDINARY_API_KEY!,
         api_secret: process.env.CLOUDINARY_API_SECRET!
     });
 
-    const numScene = Math.round(Math.random() * 4);
+    const numScene = Math.round(Math.random() * seed * 4);
     const scene = `scene${numScene}`;
 
     const imageData = await cloudinary.api.resource(scene, { faces: true });
