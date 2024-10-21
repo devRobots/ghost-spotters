@@ -12,7 +12,7 @@ export default function ImageSpotter() {
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-    fetch("/api/image", { cache: "no-store" })
+    fetch("/api/image", { cache: "no-cache" })
       .then(res => res.json())
       .then(data => {
         const img = new Image();
