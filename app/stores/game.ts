@@ -46,19 +46,17 @@ export const createGameStore = () => {
         time: state.time - 1
       })),
     spot: (ghost: number) =>
-      set((state: GameState) => {
-        console.log(state.finds.filter((spot) => spot === false).length)
-        return {
-          finds: state.finds.map((_, index) => {
-            if (index === ghost) return true;
-            return state.finds[index];
-          }),
-          ghost: ghost,
-          spotted: true,
-          status: state.finds.filter((spot) => spot === false).length === 1 ? "gameover" : "playing",
-          result: state.finds.filter((spot) => spot === false).length === 1 ? "win" : undefined
-        }
-      }),
+      set((state: GameState) => ({
+        finds: state.finds.map((_, index) => {
+          if (index === ghost) return true;
+          return state.finds[index];
+        }),
+        ghost: ghost,
+        spotted: true,
+        status: state.finds.filter((spot) => spot === false).length === 1 ? "gameover" : "playing",
+        result: state.finds.filter((spot) => spot === false).length === 1 ? "win" : undefined
+      }
+      )),
     load: () =>
       set(() => ({
         status: "playing"

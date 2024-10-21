@@ -2,13 +2,15 @@
 "use client";
 import { useEffect } from "react";
 import { ClockIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
+import { delay } from "@/lib/utils";
 import Digits from "@/components/ui/digits";
 import { useGameStore } from "@/providers/game";
-import { redirect } from "next/navigation";
 
 
 export default function Timer() {
+  const router = useRouter();
   const { status, result, gameOver, time, tick } = useGameStore((state) => state);
 
   useEffect(() => {
@@ -22,8 +24,8 @@ export default function Timer() {
 
   useEffect(() => {
     if (status !== "gameover") return;
-    if (result === "lose") redirect("/gameover")
-    if (result === "win") redirect("/win");
+    if (result === "lose") delay(3000).then(() => router.push("/gameover"));
+    if (result === "win") router.push("/win");
   }, [status, result]);
 
   return (

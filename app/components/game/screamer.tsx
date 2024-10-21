@@ -17,7 +17,7 @@ export default function Screamer() {
         alt="scream"
         width={720}
         height={853}
-        className="absolute w-2/4 h-3/4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        className="sepia absolute w-2/4 h-3/4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       />
     </section>
   );
