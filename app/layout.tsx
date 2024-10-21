@@ -1,6 +1,7 @@
 import "@/globals.css";
 import type { Metadata } from "next";
 import Background from "@/components/ui/bg";
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: "GhostSpotters",
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
+        <Analytics />
         <Background />
         {children}
       </body>
