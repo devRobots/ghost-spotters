@@ -13,7 +13,7 @@ const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 export default function Game() {
   return (
     <GameStoreProvider>
-      <main className="flex flex-col items-center gap-8 m-8">
+      <main className="flex flex-col items-center justify-evenly h-screen">
         <section className="flex flex-row justify-between items-center w-2/3">
           <h1
             className={
@@ -33,7 +33,7 @@ export default function Game() {
               alt="fog"
               width={720}
               height={853}
-              className="absolute w-[620px] h-auto"
+              className="absolute w-auto h-fill left-16 top-32"
             />
           </div>
           <ImageSpotter />

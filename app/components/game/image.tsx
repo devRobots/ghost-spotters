@@ -12,7 +12,7 @@ export default function ImageSpotter() {
   const [spots, setSpots] = useState([]);
 
   useEffect(() => {
-    fetch("/api/image")
+    fetch("/api/image", { cache: "no-store" })
       .then(res => res.json())
       .then(data => {
         const img = new Image();
@@ -25,11 +25,11 @@ export default function ImageSpotter() {
   }, [load])
 
   return (
-    <section className="relative w-[1280px] min-h-[853px] h-[853px]">
+    <section className="relative w-[1024px] min-h-[682px] h-[682px]">
       {
         status === "loading" ? <Loader ready={!image} /> :
           <>
-            <NextImage unoptimized src={image} alt="scene" className="rounded-xl absolute" width={1280} height={853} />
+            <NextImage unoptimized src={image} alt="scene" className="rounded-xl absolute" width={1024} height={682} />
             {
               spots.map((spot: number[], index: number) => {
                 const [x, y, w, h] = spot;
